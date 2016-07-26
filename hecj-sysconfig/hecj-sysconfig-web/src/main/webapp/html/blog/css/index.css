@@ -1,0 +1,160 @@
+
+body, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, img, label, li, ol, p, ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+}
+
+.fixed_top{
+	z-index: 10000;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 35px;
+	border-bottom: 1px solid;
+	position: fixed; /*支持实现w3c标准的浏览器*/
+	_position: absolute; /*单独针对IE6*/
+  	background: #F5F5F5;
+}
+
+.fixed_top .top_bar_container{
+	width: 960px;
+	margin: 0 auto;
+}
+
+.top_bar_container .nologin_bar{
+	width: 80px;
+	float: right;
+	margin-top: 7px;
+}
+
+.nologin_bar .login{
+	display: block;
+	float: left;
+}
+
+.nologin_bar .register{
+	display: block;
+	float: right;
+}
+
+.blog_main{
+	background-repeat: no-repeat;
+    background-position: center bottom;
+    width: 100%;
+    clear: both
+}
+
+.container{
+	width: 960px;
+	margin: 0 auto;
+	 border: 1px solid;
+}
+
+.header{
+	width: 950px;
+	height: 280px;
+	margin: 0 auto;
+	position: relative;
+	 border: 1px solid;
+}
+
+.header .header_area{
+	position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.header_area .blog_title{
+	position: absolute;
+	top: 130px;
+	left: 100px;
+	width: 300px;
+	height: 80px;
+	
+}
+
+.header_area .blog_title h1{
+	font-family: "微软雅黑","黑体";
+    font-size: 24px;
+    color: #000;
+    font-weight: 300;
+    display: block;
+}
+
+.header_area .blog_plate{
+	position: absolute;
+	top: 210px;
+	left: 100px;
+	width: 300px;
+	height: 40px;
+}
+
+.blog_plate ul li{
+	float: left;
+	margin-right: 20px;
+}
+
+.content{
+	width: 950px;
+	height: 900px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.content_column_1{
+	width: 210px;
+	height: 800px;
+    display: inline;
+    float: left;
+    overflow: hidden;
+}
+
+.column_1_row{
+	clear: both;
+    margin: 0 0 10px;
+    text-align: left;
+    overflow: hidden;
+    width: auto;
+    border: 1px solid;
+}
+
+.column_1_row .column_1_row_header{
+	height: 20px;
+	background-color: #905032;
+}
+
+.column_1_row .column_1_row_body{
+	width: 190px;
+	margin: 0 auto;
+}
+
+.column_1_row_body .img_head img{
+	width: 190px;
+	height: 200px;
+	border: 1px solid #ccc;
+	margin:0em;padding:0px;
+}
+
+.column_1_row_body .blog_user_name{
+	text-align: -moz-center !important;/*火狐居中解决方案*/
+	text-align: center;
+}
+
+.content_column_2{
+	width: 720px;
+	margin-left: 10px;
+	float: left;
+    display: inline;
+    border: 1px solid;
+    overflow: hidden;
+}
+
+.content_column_2_area .column_2_row_header{
+	height: 20px;
+	background-color: #905032;
+}
+
+
+

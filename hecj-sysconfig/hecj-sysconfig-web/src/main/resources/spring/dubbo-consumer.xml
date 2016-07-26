@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">     
+
+	<dubbo:application name="sysconfig-web" />
+	
+	<dubbo:registry  protocol="zookeeper"  address="www.hecj.top:4180" />
+ <!--
+	<dubbo:reference id="portConfigService" url="dubbo://www.hecj.top:20881/com.hecj.pro.sysconfig.core.service.PortConfigService" interface="com.hecj.pro.sysconfig.core.service.PortConfigService" />
+-->	
+	<dubbo:reference id="portConfigService" interface="com.hecj.sysconfig.core.service.PortConfigService" />
+
+	<dubbo:reference id="potentialService" interface="com.hecj.sysconfig.core.service.PotentialService" />
+	
+	<dubbo:reference id="qqService" interface="com.hecj.sysconfig.core.service.QqService" />
+	
+</beans>

@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.hecj</groupId>
+		<artifactId>hecj</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>hecj-common</artifactId>
+	<version>0.0.1</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>hecj-common-core</module>
+		<module>hecj-common-service</module>
+		<module>hecj-common-jfinal</module>
+		<module>hecj-common-utils</module>
+		<module>hecj-common-weixin</module>
+		<module>hecj-common-mail</module>
+	</modules>
+
+	<properties>
+		<!-- 自定义变量 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.deploy>deploy</project.deploy>
+	</properties>
+
+</project>

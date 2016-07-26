@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.hecj</groupId>
+		<artifactId>hecj-code</artifactId>
+		<version>0.0.1</version>
+	</parent>
+
+	<artifactId>hecj-code-jdbc</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.hecj</groupId>
+			<artifactId>hecj-common-utils</artifactId>
+			<version>0.0.5-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.31</version>
+		</dependency>
+		<!-- 
+		<dependency>
+		  <groupId>sqljdbc</groupId>
+		  <artifactId>sqljdbc</artifactId>
+		  <version>4.4.0</version> 
+		</dependency>
+		 -->
+		<dependency>
+		  <groupId>com.alibaba</groupId>
+		  <artifactId>fastjson</artifactId>
+		  <version>1.2.4</version>
+		</dependency>
+
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19</version> 
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<tagBase>http://hechaojie.com:3691/repos/project/hecj/tags/hecj-code-jdbc</tagBase>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<scm>
+		<connection>scm:svn:http://hechaojie.com:3691/repos/project/hecj/trunk/hecj/hecj-code/hecj-code-jdbc</connection>
+	</scm>
+
+</project>
