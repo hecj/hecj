@@ -75,7 +75,7 @@ public class Pagination implements Serializable, Cloneable {
 		this.countSize = countSize;
 	}
 
-	public Long startCursor() {
+	public Long getStartCursor() {
 		return (this.currPage - 1) * this.pageSize;
 	}
 	

@@ -1,6 +1,8 @@
 package com.hecj.common.utils;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @类功能说明：格式化工具类
@@ -66,4 +68,48 @@ public final class DateFormatUtil {
 	public static String getCurrTimeStr(){
 		return format.format(new Date());
 	}
+	
+	/**
+	 * 描述：当天开始时间
+	 * @author: hecj
+	 */
+	public static Date getDayBegin(Date date){
+		return parse(format(date, "yyyy-MM-dd"),"yyyy-MM-dd");
+	}
+	
+	/**
+	 * 描述：当天结束时间
+	 * @author: hecj
+	 */
+	public static Date getDayEnd(Date date){
+		return new Date(getDayBegin(date).getTime()+24*60*60*1000-1);
+	}
+	
+	/**
+     * 当月第一天
+     * @return
+     */
+    public static String getMonthFirstDay(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        
+        GregorianCalendar gcLast = (GregorianCalendar) Calendar.getInstance();
+        gcLast.setTime(date);
+        gcLast.set(Calendar.DAY_OF_MONTH, 1);
+        String day_first = df.format(gcLast.getTime());
+        return day_first;
+
+    }
+    
+    /**
+     * 当月最后一天
+     * @return
+     */
+    public static String getMonthLastDay(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(date);
+        ca.set(Calendar.DAY_OF_MONTH, ca.getActualMaximum(Calendar.DAY_OF_MONTH));  
+        String s = df.format(ca.getTime());
+        return s;
+    }
 }

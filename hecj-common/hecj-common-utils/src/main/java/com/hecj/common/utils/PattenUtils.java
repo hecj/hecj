@@ -21,4 +21,18 @@ public class PattenUtils {
 		}
 		return group;
 	}
+	
+	/**
+	 * 描述：是否邮箱
+	 * @author: hecj
+	 */
+	public static boolean isEmail(String email){
+		String regex = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(email);
+		if(m.find()){
+			return true;
+		}
+		return false;
+	}
 }

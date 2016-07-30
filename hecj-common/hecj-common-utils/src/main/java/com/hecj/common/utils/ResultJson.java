@@ -15,8 +15,6 @@ public class ResultJson implements Serializable{
 	
 	public String message;
 	
-	
-	
 	public ResultJson() {
 	}
 

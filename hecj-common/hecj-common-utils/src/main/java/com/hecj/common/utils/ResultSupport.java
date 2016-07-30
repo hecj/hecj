@@ -14,6 +14,8 @@ import java.util.Map;
  */
 public class ResultSupport implements Result {
 	
+	private static final long serialVersionUID = 1L;
+
 	private boolean b = false;
 	
 	private Map<String,Object> map = new HashMap<String,Object>();
