@@ -112,4 +112,30 @@ public final class DateFormatUtil {
         String s = df.format(ca.getTime());
         return s;
     }
+    
+    /**
+     * 描述：时间转文本备注
+     * @author: hecj
+     */
+    public static String date2Text(Date date){
+    	long intervalMin= (getCurrDate().getTime()-date.getTime())/1000/60;
+    	if(intervalMin >= 100*365*24*60){
+    		return "年代久远";
+    	}else if(intervalMin >= 365*24*60){
+    		return (intervalMin/(365*24*60))+"年前";
+    	} else if(intervalMin >= 30*24*60){
+    		return (intervalMin/(30*24*60))+"个月前";
+    	} else if(intervalMin >=24*60){
+    		return (intervalMin/(24*60))+"天前";
+    	} else if(intervalMin >=60){
+    		return (intervalMin/60)+"小时前";
+    	} else if(intervalMin >=5){
+    		return "5分钟前";
+    	} else if(intervalMin >=2){
+    		return "2分钟前";
+    	} else{
+    		return "刚刚";
+    	}
+    }
+    
 }
