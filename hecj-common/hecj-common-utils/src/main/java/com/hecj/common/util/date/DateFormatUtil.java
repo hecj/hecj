@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * @类功能说明：格式化工具类
@@ -137,5 +138,183 @@ public final class DateFormatUtil {
     		return "刚刚";
     	}
     }
+    
+    /**
+	 * 获得当前时间的毫秒数
+	 * <p>
+	 * 详见{@link System#currentTimeMillis()}
+	 * 
+	 * @return
+	 */
+	public static long millis() {
+		return System.currentTimeMillis();
+	}
+
+	/**
+	 * 
+	 * 获得当前Chinese月份
+	 * 
+	 * @return
+	 */
+	public static int month() {
+		return calendar().get(Calendar.MONTH) + 1;
+	}
+
+	/**
+	 * 获得月份中的第几天
+	 * 
+	 * @return
+	 */
+	public static int dayOfMonth() {
+		return calendar().get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
+	 * 今天是星期的第几天
+	 * 
+	 * @return
+	 */
+	public static int dayOfWeek() {
+		return calendar().get(Calendar.DAY_OF_WEEK);
+	}
+
+	/**
+	 * 今天是年中的第几天
+	 * 
+	 * @return
+	 */
+	public static int dayOfYear() {
+		return calendar().get(Calendar.DAY_OF_YEAR);
+	}
+
+	/**
+	 *判断原日期是否在目标日期之前
+	 * 
+	 * @param src
+	 * @param dst
+	 * @return
+	 */
+	public static boolean isBefore(Date src, Date dst) {
+		return src.before(dst);
+	}
+
+	/**
+	 *判断原日期是否在目标日期之后
+	 * 
+	 * @param src
+	 * @param dst
+	 * @return
+	 */
+	public static boolean isAfter(Date src, Date dst) {
+		return src.after(dst);
+	}
+
+	/**
+	 *判断两日期是否相同
+	 * 
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
+	public static boolean isEqual(Date date1, Date date2) {
+		return date1.compareTo(date2) == 0;
+	}
+
+	/**
+	 * 判断某个日期是否在某个日期范围
+	 * 
+	 * @param beginDate
+	 *            日期范围开始
+	 * @param endDate
+	 *            日期范围结束
+	 * @param src
+	 *            需要判断的日期
+	 * @return
+	 */
+	public static boolean between(Date beginDate, Date endDate, Date src) {
+		return beginDate.before(src) && endDate.after(src);
+	}
+
+	/**
+	 * 获得当前月的最后一天
+	 * <p>
+	 * HH:mm:ss为0，毫秒为999
+	 * 
+	 * @return
+	 */
+	public static Date lastDayOfMonth() {
+		Calendar cal = calendar();
+		cal.set(Calendar.DAY_OF_MONTH, 0); // M月置零
+		cal.set(Calendar.HOUR_OF_DAY, 0);// H置零
+		cal.set(Calendar.MINUTE, 0);// m置零
+		cal.set(Calendar.SECOND, 0);// s置零
+		cal.set(Calendar.MILLISECOND, 0);// S置零
+		cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 1);// 月份+1
+		cal.set(Calendar.MILLISECOND, -1);// 毫秒-1
+		return cal.getTime();
+	}
+
+	/**
+	 * 获得当前月的第一天
+	 * <p>
+	 * HH:mm:ss SS为零
+	 * 
+	 * @return
+	 */
+	public static Date firstDayOfMonth() {
+		Calendar cal = calendar();
+		cal.set(Calendar.DAY_OF_MONTH, 1); // M月置1
+		cal.set(Calendar.HOUR_OF_DAY, 0);// H置零
+		cal.set(Calendar.MINUTE, 0);// m置零
+		cal.set(Calendar.SECOND, 0);// s置零
+		cal.set(Calendar.MILLISECOND, 0);// S置零
+		return cal.getTime();
+	}
+
+	private static Date weekDay(int week) {
+		Calendar cal = calendar();
+		cal.set(Calendar.DAY_OF_WEEK, week);
+		return cal.getTime();
+	}
+	
+
+	public static Calendar calendar() {
+		Calendar cal = GregorianCalendar.getInstance(Locale.CHINESE);
+		cal.setFirstDayOfWeek(Calendar.MONDAY);
+		return cal;
+	}
+
+	/**
+	 * 获得周五日期
+	 * <p>
+	 * 注：日历工厂方法{@link #calendar()}设置类每个星期的第一天为Monday，US等每星期第一天为sunday
+	 * 
+	 * @return
+	 */
+	public static Date friday() {
+		return weekDay(Calendar.FRIDAY);
+	}
+
+	/**
+	 * 获得周六日期
+	 * <p>
+	 * 注：日历工厂方法{@link #calendar()}设置类每个星期的第一天为Monday，US等每星期第一天为sunday
+	 * 
+	 * @return
+	 */
+	public static Date saturday() {
+		return weekDay(Calendar.SATURDAY);
+	}
+
+	/**
+	 * 获得周日日期
+	 * <p>
+	 * 注：日历工厂方法{@link #calendar()}设置类每个星期的第一天为Monday，US等每星期第一天为sunday
+	 * 
+	 * @return
+	 */
+	public static Date sunday() {
+		return weekDay(Calendar.SUNDAY);
+	}
     
 }
