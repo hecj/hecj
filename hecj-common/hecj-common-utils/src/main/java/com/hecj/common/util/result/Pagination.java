@@ -27,14 +27,6 @@ public class Pagination implements Serializable, Cloneable {
 	 * 总条数
 	 */
 	private Long countSize = 0l;
-	/*
-	 * 显示分页器
-	 */
-	private String showPagination;
-	/*
-	 * 分页的baseURL
-	 */
-	private String pathURL ;
 
 	public Pagination() {
 		super();
@@ -79,38 +71,4 @@ public class Pagination implements Serializable, Cloneable {
 		return (this.currPage - 1) * this.pageSize;
 	}
 	
-	public void setPathURL(String pathURL) {
-		this.pathURL = pathURL;
-	}
-	
-	public String getShowPagination(){
-		
-		StringBuffer showPage = new StringBuffer();
-		
-		if(this.getCurrPage() == 1 ){
-			showPage.append("首页&nbsp;&nbsp;");
-		}else{
-			showPage.append("<a href='"+this.pathURL+"1'>首页</a>&nbsp;&nbsp;");
-		}
-		
-		if(this.getCurrPage() > 1 && this.getCountPage() > 1 ){
-			showPage.append("<a href='"+this.pathURL+""+(this.getCurrPage()-1)+"'>上一页</a>&nbsp;&nbsp;");
-		}else{
-			showPage.append("上一页&nbsp;&nbsp;");
-		}
-		
-		if(this.getCurrPage() < this.getCountPage() && this.getCountPage() > 1 ){
-			showPage.append("<a href='"+this.pathURL+""+(this.getCurrPage()+1)+"'>下一页</a>&nbsp;&nbsp;");
-		}else{
-			showPage.append("下一页&nbsp;&nbsp;");
-		}
-		
-		if(this.getCurrPage() == this.getCountPage() || this.getCountPage() == 0 ){
-			showPage.append("尾页");
-		}else{
-			showPage.append("<a href='"+this.pathURL+""+this.getCountPage()+"'>尾页</a>&nbsp;&nbsp;");
-		}
-		showPagination = showPage.toString();
-		return showPagination;
-	}
 }

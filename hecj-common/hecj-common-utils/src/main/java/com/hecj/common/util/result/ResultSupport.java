@@ -2,6 +2,8 @@ package com.hecj.common.util.result;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.hecj.common.util.result.Pagination;
 /**
  * @类功能说明：基本实现类 默认map的key为data保存基本数据集合
  * 扩展数据可放入map中
@@ -20,6 +22,10 @@ public class ResultSupport implements Result {
 	
 	private Map<String,Object> map = new HashMap<String,Object>();
 	
+	private List<?> list ;
+	
+	private Pagination pagination = new Pagination();
+	
 	public Map<String, Object> getModel() {
 		return map;
 	}
@@ -37,23 +43,23 @@ public class ResultSupport implements Result {
 	}
 
 	@Override
-	public void setData(List<?> data) {
-		this.map.put("data", data);
+	public void setList(List<?> list) {
+		this.list = list;
 	}
 
 	@Override
-	public List<?> getData() {
-		return (List<?>) this.map.get("data");
+	public List<?> getList() {
+		return this.list;
 	}
 
 	@Override
 	public Pagination getPagination() {
-		return (Pagination) this.map.get("pagination");
+		return this.pagination;
 	}
 
 	@Override
 	public void setPagination(Pagination pagination) {
-		this.map.put("pagination", pagination);
+		this.pagination = pagination;
 	}
 
 }

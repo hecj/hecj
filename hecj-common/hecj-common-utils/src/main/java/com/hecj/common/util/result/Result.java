@@ -2,6 +2,8 @@ package com.hecj.common.util.result;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+
+import com.hecj.common.util.result.Pagination;
 /**
  * @类功能说明：数据集
  * @类修改者：
@@ -36,12 +38,12 @@ public interface Result extends Serializable {
 	/**
 	 * 设置数据集
 	 */
-	public void setData(List<?> data);
+	public void setList(List<?> List);
 	
 	/**
 	 * 得到数据集
 	 */
-	public List<?> getData();
+	public List<?> getList();
 	
 	/**
 	 * 设置分页器

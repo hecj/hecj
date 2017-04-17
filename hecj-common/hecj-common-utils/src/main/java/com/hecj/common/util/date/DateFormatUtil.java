@@ -152,6 +152,16 @@ public final class DateFormatUtil {
 
 	/**
 	 * 
+	 * 获得当前Chinese年份
+	 * 
+	 * @return
+	 */
+	public static int year() {
+		return calendar().get(Calendar.YEAR);
+	}
+	
+	/**
+	 * 
 	 * 获得当前Chinese月份
 	 * 
 	 * @return

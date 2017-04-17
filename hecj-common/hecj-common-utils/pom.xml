@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<!-- 
 	<parent>
@@ -10,6 +12,20 @@
 	<groupId>com.hecj</groupId>
 	<artifactId>hecj-common-utils</artifactId>
 	<version>0.0.5-SNAPSHOT</version>
+	
+	 <distributionManagement>
+		<repository>
+			<id>local-releases</id>
+			<name>releases</name>
+			<url>http://localhost:8081/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>local-snapshots</id>
+			<name>snapshots</name>
+			<url>http://localhost:8081/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
 	<dependencies>
 
 		<dependency>
@@ -24,13 +40,21 @@
 			<version>3.2.0</version>
 		</dependency>
 		
+	<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+<dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr-solrj</artifactId>
+    <version>4.8.1</version>
+</dependency>
+
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-
+		
 	</dependencies>
 
 	<build>
