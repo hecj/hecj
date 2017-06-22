@@ -16,13 +16,13 @@ public class Encrypt {
 		
 		Encrypt en = new Encrypt();
 		
-		String fKey = "pdcss";/* 必需的密钥 */
-		String sKey = "css";  
-		String tKey = "co";
+		String fKey = "hechaojie";/* 必需的密钥 */
+		String sKey = "";  
+		String tKey = "";
 		
-		String data = "ABC码头matol-110ABC码头matol-110ABC码头matol-110ABC码头matol-110ABC码头matol-110ABC码头matol-110ABC码头matol-110";
+		String data = "F4184E2F12F340C233006252B659F70B";
 		String strs = en.strEncode(data, fKey, sKey, tKey);
-		String decs = en.strDecode(strs, fKey, sKey, tKey);
+		String decs = en.strDecode(data, fKey, sKey, tKey);
 		System.out.println(strs);
 		System.out.println(decs);
 		

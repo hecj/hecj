@@ -1,12 +1,9 @@
 package com.hecj.common.util.map;
 
 import java.util.BitSet;  
-import java.util.HashMap;  
-
-/**
- * 描述：地图距离计算工具类
- * @author: hecj
- */
+import java.util.HashMap;
+import java.util.Map;  
+  
 public class Geohash {  
   
     private static int numbits = 6 * 5;  
@@ -14,6 +11,8 @@ public class Geohash {
             '9', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'm', 'n', 'p',  
             'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };  
       
+    public static String BASE32 = "0123456789bcdefghjkmnpqrstuvwxyz"; 
+    
     final static HashMap<Character, Integer> lookup = new HashMap<Character, Integer>();  
     static {  
         int i = 0;  
@@ -21,12 +20,6 @@ public class Geohash {
             lookup.put(c, i++);  
     }  
   
-    public static void main(String[] args)  throws Exception{  
-  
-        System.out.println(new Geohash().encode(45, 125));  
-              
-    }  
-
     public double[] decode(String geohash) {  
         StringBuilder buffer = new StringBuilder();  
         for (char c : geohash.toCharArray()) {  
@@ -116,5 +109,177 @@ public class Geohash {
             buf[--charPos] = '-';  
         return new String(buf, charPos, (65 - charPos));  
     }  
-  
+    
+    /**获取九个点的矩形编码
+	 * @param geohash
+	 * @return
+	 */
+	public static String[] getGeoHashExpand(String geohash){
+		try {
+			System.out.println("=========	"+geohash);
+			
+			String geohashTop = calculateAdjacent(geohash, "top");
+			System.out.println("=========	"+geohashTop);
+			
+			String geohashBottom = calculateAdjacent(geohash, "bottom");
+			System.out.println("=========	"+geohashBottom);
+			
+			String geohashRight = calculateAdjacent(geohash, "right");
+			System.out.println("=========	"+geohashRight);
+			
+			String geohashLeft = calculateAdjacent(geohash, "left");
+			System.out.println("=========	"+geohashLeft);
+			
+			String geohashTopLeft = calculateAdjacent(geohashLeft, "top");
+			System.out.println("=========	"+geohashTopLeft);
+			
+			String geohashTopRight = calculateAdjacent(geohashRight, "top");
+			System.out.println("=========	"+geohashTopRight);
+			
+			String geohashBottomRight = calculateAdjacent(geohashRight, "bottom");
+			System.out.println("=========	"+geohashBottomRight);
+			
+			String geohashBottomLeft = calculateAdjacent(geohashLeft, "bottom");
+			System.out.println("=========	"+geohashBottomLeft);
+			String[] expand = {geohash, geohashTop, geohashBottom, geohashRight, geohashLeft, geohashTopLeft, geohashTopRight, geohashBottomRight, geohashBottomLeft};
+			return expand;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+/***********************获取九个的矩形编码****************************************/
+	
+	public static Map<String, String> BORDERS = new HashMap<String, String>();
+	public static Map<String, String> NEIGHBORS = new HashMap<String, String>();
+	
+	 static {
+		NEIGHBORS.put("right:even", "bc01fg45238967deuvhjyznpkmstqrwx");
+		NEIGHBORS.put("left:even", "238967debc01fg45kmstqrwxuvhjyznp");
+		NEIGHBORS.put("top:even", "p0r21436x8zb9dcf5h7kjnmqesgutwvy");
+		NEIGHBORS.put("bottom:even", "14365h7k9dcfesgujnmqp0r2twvyx8zb");
+		
+		NEIGHBORS.put("right:odd", "p0r21436x8zb9dcf5h7kjnmqesgutwvy");
+		NEIGHBORS.put("left:odd", "14365h7k9dcfesgujnmqp0r2twvyx8zb");
+		NEIGHBORS.put("top:odd", "bc01fg45238967deuvhjyznpkmstqrwx");
+		NEIGHBORS.put("bottom:odd", "238967debc01fg45kmstqrwxuvhjyznp");
+		
+		BORDERS.put("right:even", "bcfguvyz");
+		BORDERS.put("left:even", "0145hjnp");
+		BORDERS.put("top:even", "prxz");
+		BORDERS.put("bottom:even", "028b");
+		
+		BORDERS.put("right:odd", "prxz");
+		BORDERS.put("left:odd", "028b");
+		BORDERS.put("top:odd", "bcfguvyz");
+		BORDERS.put("bottom:odd", "0145hjnp");
+	}
+	
+	/**分别计算每个点的矩形编码
+	 * @param srcHash
+	 * @param dir
+	 * @return
+	 */
+	public static String calculateAdjacent(String srcHash, String dir) {
+		srcHash = srcHash.toLowerCase();
+		char lastChr = srcHash.charAt(srcHash.length()-1);
+		int a = srcHash.length()%2;
+		String type = (a>0)?"odd":"even";
+		String base = srcHash.substring(0,srcHash.length()-1);
+		if (BORDERS.get(dir+":"+type).indexOf(lastChr)!=-1){
+			base = calculateAdjacent(base, dir);
+		}
+		base = base + BASE32.toCharArray()[(NEIGHBORS.get(dir+":"+type).indexOf(lastChr))];
+		return base;
+	} 
+	
+	@Deprecated
+	public static void expandLngLat(String geohash, int len){
+		boolean is_even = true;
+		double[] lat = new double[3]; 
+		double[] lon = new double[3]; 
+		lat[0] = -90.0; 
+		lat[1] = 90.0;
+		lon[0] = -180.0;
+		lon[1] = 180.0;
+		double lat_err = 90.0;
+		double lon_err = 180.0; 
+		char[] geohashChar = geohash.toCharArray();
+//		String[] BITS = {"16", "8", "4", "2", "1"};
+		int[] BITS = {16, 8, 4, 2, 1};
+		for (int i = 0; i < geohashChar.length; i++) {
+			char c = geohashChar[i];
+			int cd = BASE32.indexOf(c);
+			for (int j = 0; j < 5; j++) {
+				int mask = BITS[j];
+				if (is_even) {
+					lon_err /= 2;
+					refine_interval(lon, cd, mask);
+				} else {
+					lat_err /= 2;
+					refine_interval(lat, cd, mask);
+				}
+				is_even = !is_even;
+			}
+		}
+		lat[2] = (lat[0] + lat[1])/2;
+		//1:[38.8970947265625, 38.902587890625, 38.89984130859375]
+		//1: 38.8970947265625, 38.902587890625, 38.89984130859375
+		//2:[38.902587890625, 38.9080810546875, 38.90533447265625]
+		//2: 38.902587890625, 38.9080810546875, 38.90533447265625
+		lon[2] = (lon[0] + lon[1])/2; 
+		//1:[-77.047119140625, -77.0361328125, -77.0416259765625]
+		//1: -77.047119140625, -77.0361328125, -77.0416259765625
+		//2:[-77.047119140625, -77.0361328125, -77.0416259765625]
+		//2: -77.047119140625, -77.0361328125, -77.0416259765625
+		
+		String topLeft = lat[0]+","+lon[0];
+		String topRight = lat[0]+","+lon[1];
+		
+		String bottomleft = lat[1]+","+lon[0];
+		String bottoomRight = lat[1]+","+lon[1];
+		String centerPoint = (lat[0]+lat[1])/2+","+(lon[0]+lon[1])/2;
+		
+		String centerTop = lat[0]+","+(lon[0]+lon[1])/2;
+		String centerBottom = lat[1]+","+(lon[0]+lon[1])/2;
+		
+		String centerLeft = (lat[0]+lat[1])/2+","+lon[0];
+		String centerRight = (lat[0]+lat[1])/2+","+lon[1];
+//		System.out.println("topLeft:["+topLeft+"] geoHash:"+g.encode(lat[0], lon[0]));
+//		System.out.println("topRight:["+topRight+"] geoHash:"+g.encode(lat[0], lon[1]));
+//		System.out.println("bottomleft:["+bottomleft+"] geoHash:"+g.encode(lat[1], lon[0]));
+//		System.out.println("bottoomRight:["+bottoomRight+"] geoHash:"+g.encode(lat[1], lon[1]));
+//		System.out.println("centerPoint:["+centerPoint+"] geoHash:"+g.encode((lat[0]+lat[1])/2, (lon[0]+lon[1])/2));
+//		System.out.println("centerTop:["+centerTop+"] geoHash:"+g.encode(lat[0], (lon[0]+lon[1])/2));
+//		System.out.println("centerBottom:["+centerBottom+"] geoHash:"+g.encode(lat[1], (lon[0]+lon[1])/2));
+//		System.out.println("centerLeft:["+centerLeft+"] geoHash:"+g.encode((lat[0]+lat[1])/2, lon[0]));
+//		System.out.println("centerRight:["+centerRight+"] geoHash:"+g.encode((lat[0]+lat[1])/2, lon[1]));
+		
+	}
+	
+	@Deprecated
+	public static void refine_interval(double[] interval, int cd, int mask){
+		 if ((cd & mask)>0){
+			 interval[0] = (interval[0] + interval[1])/2;
+		 }else{
+			 interval[1] = (interval[0] + interval[1])/2; 
+		 }
+	}
+	
+	public static void main(String[] args) {
+		Geohash en = new Geohash();
+		
+		/*获取的geohash多少位，位数越长，精度越准*/
+		int geohashLen = 5;
+		double lat = 39.90403;
+		double lon = 116.407526; //需要查询经纬度，目前指向的是BeiJing
+		
+		/*获取中心点的geohash*/
+		String geohash = en.encode(lat, lon).substring(0, geohashLen);
+		System.out.println(geohash);
+		/*获取所有的矩形geohash， 一共是九个 ，包含中心点,打印顺序请参考图2*/
+		String[] result = Geohash.getGeoHashExpand(geohash);
+		
+		
+	}
 }
