@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * 描述：des加密工具类
+ * 对称加密
  * @author: hecj
  */
 public class Encrypt {
